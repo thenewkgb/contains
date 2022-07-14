@@ -1,47 +1,61 @@
+// bug
+// doesn't need to find all of what
+
 #include <iostream>
 #include <vector>
 
-bool Contains(std::string what, std::string s)
+bool contains(std::string what, std::string s, int& withindex)
 {
-    bool result = false;
-     
-    std::vector<char> breakdown = {};
-     
-    char whatchar = ' ';
-	
     // store individual characters of what
     // into breakdown
-    for(int i = 0; i < what.length(); ++i)
+    std::vector<char> breakdown = {};
+    char whatchar{};
+    for (int i = 0; i < what.length(); ++i)
     {
-         whatchar = what[i];
-         breakdown.push_back(whatchar);
+        whatchar = what[i];
+        breakdown.push_back(whatchar);
     }
-	
-    int held = 0;
-	
-    for(int i = 0; i < s.length(); ++i)
+
+    int foundletterat = 0;
+
+    for (int j = withindex; j < s.length(); ++j)
     {
-     // if first key letter is found in s
-     if(s[i] == breakdown [0])
-     {
-          held = i;
-   
-          for(int j = 1;j<what.length();++j)
-          {
-               if(s[j+held] == breakdown[j])
-               result = true;
-          }
-     }
- }
-     
- return result;
+        if (s[j] == breakdown[0])
+        {
+            foundletterat = j;
+            withindex = j;
+        }
+    }
+    
+    bool foundword = false;
+    int count = 0;
+    
+    for (int k = foundletterat; k < foundletterat + what.length(); ++k)
+    {
+        if(s[k] == breakdown[count])
+            foundword = true;
+        else
+            foundword = false;
+            
+        ++count;
+    }
+
+    if (foundword)
+        return true;
+    else if(withindex<s.length()-what.length())
+        contains(what, s, withindex);
+    else
+        return false;
 }
 
 int main(int argc, char *argv[])
 {
-    std::string textin = "i would yes";
-	
-    if(Contains("yes", textin))
+    std::string intext = "i would ke kevin";
+    std::string findtext = "kevin";
+
+    int withindex = 0;
+
+    if (contains(findtext, intext, withindex))
         std::cout << "Found";
     else
         std::cout << "Not found";
