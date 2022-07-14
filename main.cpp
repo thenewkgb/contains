@@ -1,6 +1,3 @@
-// bug
-// doesn't need to find all of what
-
 #include <iostream>
 #include <vector>
 
