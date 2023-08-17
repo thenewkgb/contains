@@ -1,2 +1,2 @@
 # contains
-Find a word in a string
+Find a word in a string.
